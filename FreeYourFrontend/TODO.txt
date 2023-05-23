@@ -1,0 +1,8 @@
+* Aplicar Auth Firebase en este proyecto
+* Investigar como proteger una ruta 
+* Mostrar componentes del navbar segun si esta logeado o no (reemplazar los ngIf)
+* Agregar assets y favicon 
+* Estilizar el inicio, intentando que quede como en el proyecto de angular 
+* Implementar todas las tecnologias de el antiguo proyecto 
+* Implementar el boton de mercado pago 
+* Crear el servidor y hacer que lo consuma para el boton 
