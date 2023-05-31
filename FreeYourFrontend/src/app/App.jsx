@@ -6,45 +6,58 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error404 from './components/content/Error404/Error404'
 
+function toMain() {
+  document.getElementById("main")?.scrollIntoView({ behavior: "smooth" })
+}
+function toAbout() {
+  document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
+}
+function toLocation() {
+  document.getElementById("location")?.scrollIntoView({ behavior: "smooth" })
+}
+function toBuy() {
+  document.getElementById("buy")?.scrollIntoView({ behavior: "smooth" })
+}
+
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: 
-      <>
-      <Navbar />
-      <Inicio />
-      <Footer />
-      </>,
+      element:
+        <>
+          <Navbar />
+          <Inicio />
+          <Footer />
+        </>,
       errorElement: <>
-      <Navbar />
-      <Error404 />
-      <Footer />
+        <Navbar />
+        <Error404 />
+        <Footer />
       </>
     },
     {
       path: "/home",
-      element:<>
-      <Navbar />
-      <Inicio />
-      <Footer />
+      element: <>
+        <Navbar />
+        <Inicio />
+        <Footer />
       </>
     },
     {
       path: "/inicio",
-      element:<>
-      <Navbar />
-      <Inicio />
-      <Footer />
+      element: <>
+        <Navbar />
+        <Inicio />
+        <Footer />
       </>
     },
     {
       path: "/admin",
       element: <>
-      <Navbar />
-      <Admin />
-      <Footer />
+        <Navbar />
+        <Admin />
+        <Footer />
       </>
     }
   ]);
@@ -55,5 +68,5 @@ function App() {
     </>
   )
 }
-
 export default App
+export { toMain, toAbout, toLocation, toBuy }
