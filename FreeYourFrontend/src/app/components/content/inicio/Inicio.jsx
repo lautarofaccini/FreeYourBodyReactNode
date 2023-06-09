@@ -17,7 +17,6 @@ function Inicio() {
     const [isLoading, setIsLoading] = useState(false);
     const [orderData, setOrderData] = useState({ quantity: "1", price: "1500", amount: 1500, description: "Entrada para Free Your Body"});
     //TODO: Que el precio se obtenga desde admin y se actualice aca
-    //Segun la cantidad de entradas, obligue al usuario a escribir el nombre de cada uno
 
 
     function renderSpinner() {
@@ -31,7 +30,7 @@ function Inicio() {
     }
 
     function handleClick() {
-
+        alert("hola")
         setIsLoading(true);
         fetch("http://localhost:8080/create_preference", {
             method: "POST",
@@ -84,8 +83,8 @@ function Inicio() {
                     <div className="brand main-div ">
                         <div>
                             {renderSpinner()}
-                            <Checkout onClick={handleClick} />
-                            {/* <Payment /> */}
+                            <Checkout onClick={handleClick}/>
+                            <Payment /> 
                         </div>
                     </div>
                 </section>

@@ -9,50 +9,43 @@ function UsersContextProvider({ children }) {
     const [users, setUsers] = useState([])
     let newObj = {}
     function createUser(lim) {
-        if (lim < users.length){
+        if (lim < users.length) {
             for (let i = lim; i < users.length; i++) {
                 users.pop()
-            } 
-            if (users.length != lim){
+            }
+            if (users.length != lim) {
                 createUser(lim)
             }
-        } else if (lim > users.length){
+        } else if (lim > users.length) {
             for (let i = users.length; i < lim; i++) {
                 newObj = {
                     id: i,
                     form: [
                         {
-                            paragraph: ["Nombre"],
-                            name: "input_text",
-                            type: "text",
-                            values: [""],
-                            required: true,
+                            paragraph: "Nombre",
+                            value: "",
                         },
                         {
-                            paragraph: ["Apellido"],
-                            name: "input_text",
-                            type: "text",
-                            values: [""],
-                            required: true,
+                            paragraph: "Apellido",
+                            value: "",
                         },
                         {
-                            paragraph: ["Dni"],
-                            name: "input_text",
-                            type: "text",
-                            values: [""],
-                            required: true,
+                            paragraph: "DNI",
+                            value: 0,
                         },
-                ]}
+                    ]
+                }
                 users.push(newObj)
-            } 
+            }
         }
     }
 
-    function deleteUser(id) {
-        setUsers(users.filter(user => user.id >= id))
-    }
-    function deleteAll() {
-        setUsers(users.filter(user => user.id === 99))
+
+    function editUser(id, newValue) {
+        users[id].form[0].value = newValue[0]
+        users[id].form[1].value = newValue[1]
+        users[id].form[2].value = newValue[2]
+        console.log(users)
     }
 
     useEffect(() => {
@@ -63,8 +56,8 @@ function UsersContextProvider({ children }) {
         <UsersContext.Provider value={{
             users,
             createUser,
-            deleteUser,
-            deleteAll
+            editUser,
+            clearUsers
         }}>
             {children}
         </UsersContext.Provider>

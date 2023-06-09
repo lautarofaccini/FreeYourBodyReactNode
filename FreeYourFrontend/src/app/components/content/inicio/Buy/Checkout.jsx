@@ -6,15 +6,18 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Formulario from './Formulario'
-
-
+import Accordion from 'react-bootstrap/Accordion';
 
 
 function Checkout({ onClick }) {
-  const [numbers, setNumbers] = useState([...Array(1).keys()]);
+
+
+  const [validated, setValidated] = useState(false);
+
   const [show, setShow] = useState(false);
   const handleClose = () => {
-    setShow(false)};
+    setShow(false)
+  };
   const handleShow = () => setShow(true);
 
   function handleClick() {
@@ -23,9 +26,34 @@ function Checkout({ onClick }) {
     handleShow()
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      //TODO: Hacer que todos los acordeones que falten se abran
+      alert("Por favor, rellene todos los campos faltantes.")
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true)
+    if (form.checkValidity()) {
+      for (let i = 0; i < orderData.quantity; i++) {
+        const newForm = [event.target[2 + 4 * i].value, event.target[3 + 4 * i].value, parseInt(event.target[4 + 4 * i].value)]
+        editUser(i, newForm)
+      }
+      console.log(users)
+      setValidated(true);
+
+      //Si se aprovo el formulario
+      handleClose()
+      onClick()
+    }
+  }
+
   const {
     users,
     createUser,
+    editUser
   } = useContext(UsersContext);
 
   const [isVisible, setIsVisible] = useState(true);
@@ -47,7 +75,6 @@ function Checkout({ onClick }) {
   function updatePrice(event) {
     const quantity = event.target.value;
     const amount = parseInt(orderData.price) * parseInt(quantity);
-    setNumbers([...Array(parseInt(quantity)).keys()]);
     setOrderData({ ...orderData, quantity, amount });
   };
 
@@ -92,45 +119,41 @@ function Checkout({ onClick }) {
             <div className="col-md-12 col-lg-4">
               <div className="summary">
                 <div className="summary-item">
-                  <span className="text">Subtotal</span>
+                  <span className="text">Total </span>
                   <span className="price" id="cart-total">
                     ${orderData.amount}
                   </span>
                 </div>
-                <button
-                  className="btn btn-outline-primary me-2"
-                  onClick={onClick}
-                  id="checkout-btn"
-                  disabled={disabled}
-                >
-                  Comprar
-                </button>
-
-                {/* Este comprar va a abrir un modal, ese modal va a mandar la informacion a payment*/}
               </div>
-
-
               <Button variant="btn btn-outline-primary me-2" onClick={handleClick}>
                 Comprar
               </Button>
               <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  {numbers.map(
-                    el => <Formulario value={el} key={el} />
-                  )
-                  }
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                  </Button>
-                </Modal.Footer>
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+
+                    <Accordion defaultActiveKey="0">
+                      {users.map(
+                        (user) =>
+                          <Accordion.Item eventKey={user.id}>
+                            <Accordion.Header>Ticket #{user.id + 1}</Accordion.Header>
+                            <Accordion.Body>
+                              <Formulario key={user.id} value={user} />
+                            </Accordion.Body>
+                          </Accordion.Item>
+                      )}
+                    </Accordion>
+
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" type="submit">
+                      Enviar
+                    </Button>
+                  </Modal.Footer>
+                </Form>
               </Modal>
 
             </div>

@@ -6,3 +6,4 @@
 * Implementar todas las tecnologias de el antiguo proyecto 
 * Implementar el boton de mercado pago 
 * Crear el servidor y hacer que lo consuma para el boton 
+* Cuando se realiza la transaccion, limpiar el arreglo users
